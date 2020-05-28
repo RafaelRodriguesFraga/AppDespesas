@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppDespesas</string>
+    <string name="organize_texto">Organize suas contas\n de onde estiver</string>
+    <string name="simples_texto">Simples e fácil de usar</string>
 </resources>
