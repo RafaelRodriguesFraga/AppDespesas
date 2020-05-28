@@ -2,4 +2,8 @@
     <string name="app_name">AppDespesas</string>
     <string name="organize_texto">Organize suas contas\n de onde estiver</string>
     <string name="simples_texto">Simples e fácil de usar</string>
+    <string name="tenha_um_controle_melhor_n_sobre_o_seu_dinheiro">Tenha um controle melhor\n sobre o seu dinheiro</string>
+    <string name="categorize">Categorize seus lançamentos e vendo o\n destino de cada centavo</string>
+    <string name="nunca_esqueca">Nunca mais esqueça de\n pagar uma conta</string>
+    <string name="receba_alertas">Receba alertas quando quiser</string>
 </resources>
