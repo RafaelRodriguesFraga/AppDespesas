@@ -8,4 +8,13 @@
     <string name="receba_alertas">Receba alertas quando quiser</string>
     <string name="tudo_organizado_na_n_palma_da_sua_m_o">Tudo organizado na\n palma da sua mão</string>
     <string name="use_no_seu_smartphone">Use no seu smartphone</string>
+    <string name="crie_conta">Crie sua conta grátis</string>
+    <string name="ja_tenho_uma_conta">Já tenho uma conta</string>
+    <string name="cadastre_se">Cadastre-se</string>
+    <string name="junte_se_a_nos">Junte-se a nós</string>
+    <string name="nome">Nome</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="acesse_sua_conta">Acesse sua conta</string>
+    <string name="entrar">Entrar</string>
 </resources>
