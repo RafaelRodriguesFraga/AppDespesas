@@ -17,4 +17,5 @@
     <string name="senha">Senha</string>
     <string name="acesse_sua_conta">Acesse sua conta</string>
     <string name="entrar">Entrar</string>
+    <string name="cadastrar">Cadastrar</string>
 </resources>
