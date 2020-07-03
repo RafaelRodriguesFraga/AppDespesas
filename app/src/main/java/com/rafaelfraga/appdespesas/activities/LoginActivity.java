@@ -16,8 +16,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.rafaelfraga.appdespesas.R;
 import com.rafaelfraga.appdespesas.config.FirebaseConfig;
 import com.rafaelfraga.appdespesas.models.Usuario;
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                           Intent intent = new Intent(LoginActivity.this, DesesasActivity.class);
+                           Intent intent = new Intent(LoginActivity.this, DespesasActivity.class);
                            startActivity(intent);
                            finish();
                         }else {

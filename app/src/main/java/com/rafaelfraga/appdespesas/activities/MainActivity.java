@@ -58,7 +58,7 @@ public class MainActivity extends IntroActivity {
         mAuth = FirebaseConfig.getFirebaseAuth();
 
         if(mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, DesesasActivity.class);
+            Intent intent = new Intent(this, DespesasActivity.class);
             startActivity(intent);
             finish();
         }

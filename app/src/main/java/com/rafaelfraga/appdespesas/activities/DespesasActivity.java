@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.rafaelfraga.appdespesas.R;
 
-public class DesesasActivity extends AppCompatActivity {
+public class DespesasActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
