@@ -46,7 +46,11 @@ public class CadastrarActivity extends AppCompatActivity {
                 String email = mEmail.getText().toString();
                 String senha = mSenha.getText().toString();
 
-                validaCampos(nome, email, senha);
+                if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+                    Toast.makeText(CadastrarActivity.this, "Todos os campos " +
+                            "são obrigatórios", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 mUsuario = new Usuario();
                 mUsuario.setNome(nome);
@@ -56,13 +60,6 @@ public class CadastrarActivity extends AppCompatActivity {
                 cadastrarUsuario();
             }
         });
-    }
-
-    public void validaCampos(String nome, String email, String senha) {
-        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(this, "Todos os campos são obrigatórios", Toast.LENGTH_SHORT).show();
-            return;
-        }
     }
 
     public void cadastrarUsuario() {
