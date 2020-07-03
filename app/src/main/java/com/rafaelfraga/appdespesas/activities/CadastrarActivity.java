@@ -69,9 +69,7 @@ public class CadastrarActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(CadastrarActivity.this,
-                                    R.string.mensagem_sucesso_cadastro_usuario
-                                    , Toast.LENGTH_SHORT).show();
+                           finish();
                         } else {
                             String excecao = "";
                             try {
