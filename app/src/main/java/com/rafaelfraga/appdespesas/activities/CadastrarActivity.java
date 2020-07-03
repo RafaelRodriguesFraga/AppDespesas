@@ -1,18 +1,30 @@
 package com.rafaelfraga.appdespesas.activities;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rafaelfraga.appdespesas.R;
+import com.rafaelfraga.appdespesas.config.FirebaseConfig;
+import com.rafaelfraga.appdespesas.models.Usuario;
+
 public class CadastrarActivity extends AppCompatActivity {
 
     private EditText mNome;
     private EditText mEmail;
     private EditText mSenha;
     private Button mCadastrar;
+    private FirebaseAuth mAuth;
+    private Usuario mUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +44,40 @@ public class CadastrarActivity extends AppCompatActivity {
                 String senha = mSenha.getText().toString();
 
                 validaCampos(nome, email, senha);
+
+                mUsuario = new Usuario();
+                mUsuario.setNome(nome);
+                mUsuario.setEmail(email);
+                mUsuario.setSenha(senha);
+
                 cadastrarUsuario();
-
-
             }
         });
     }
 
     public void validaCampos(String nome, String email, String senha) {
-        if(nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
             Toast.makeText(this, "Todos os campos são obrigatórios", Toast.LENGTH_SHORT).show();
             return;
         }
     }
 
     public void cadastrarUsuario() {
-
+        mAuth = FirebaseConfig.getFirebaseAuth();
+        mAuth.createUserWithEmailAndPassword(mUsuario.getEmail(), mUsuario.getSenha())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(CadastrarActivity.this,
+                                    R.string.mensagem_sucesso_cadastro_usuario
+                                    , Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CadastrarActivity.this,
+                                   getString(R.string.mensagem_erro_cadastro_usuario)+task.getException()
+                                    , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
