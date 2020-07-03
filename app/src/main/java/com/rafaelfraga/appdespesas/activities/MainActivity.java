@@ -13,14 +13,19 @@ import com.rafaelfraga.appdespesas.config.FirebaseConfig;
 public class MainActivity extends IntroActivity {
 
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        verificarUsuarioLogado();
         adicionarSlides();
-
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        verificarUsuarioLogado();
+    }
+
     private void adicionarSlides() {
 
         setButtonBackVisible(false);
