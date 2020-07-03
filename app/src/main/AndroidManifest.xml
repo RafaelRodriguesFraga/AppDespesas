@@ -13,7 +13,7 @@
         </activity>
         <activity android:name=".activities.CadastrarActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/Theme.Intro" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
