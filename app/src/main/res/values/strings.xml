@@ -18,4 +18,6 @@
     <string name="acesse_sua_conta">Acesse sua conta</string>
     <string name="entrar">Entrar</string>
     <string name="cadastrar">Cadastrar</string>
+    <string name="mensagem_sucesso_cadastro_usuario">Usuário cadastrado com sucesso!</string>
+    <string name="mensagem_erro_cadastro_usuario">\"Erro ao cadastrar o usuário: \"</string>
 </resources>
