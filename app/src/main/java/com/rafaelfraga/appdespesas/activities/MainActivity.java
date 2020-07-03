@@ -4,20 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 import com.rafaelfraga.appdespesas.R;
+import com.rafaelfraga.appdespesas.config.FirebaseConfig;
 
 public class MainActivity extends IntroActivity {
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        verificarUsuarioLogado();
         adicionarSlides();
 
     }
-
     private void adicionarSlides() {
 
         setButtonBackVisible(false);
@@ -49,6 +52,16 @@ public class MainActivity extends IntroActivity {
                 .fragment(R.layout.intro_cadastro)
                 .canGoForward(false)
                 .build());
+    }
+
+    private void verificarUsuarioLogado() {
+        mAuth = FirebaseConfig.getFirebaseAuth();
+
+        if(mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(this, DesesasActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void entrar(View view) {
