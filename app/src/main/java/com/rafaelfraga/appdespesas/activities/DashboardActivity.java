@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.rafaelfraga.appdespesas.R;
 
-public class DespesasActivity extends AppCompatActivity implements View.OnClickListener {
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FloatingActionButton mDespesa;
     private FloatingActionButton mReceita;
@@ -18,7 +18,7 @@ public class DespesasActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_despesas);
+        setContentView(R.layout.activity_dashboard);
 
         mDespesa = findViewById(R.id.fabDespesa);
         mReceita = findViewById(R.id.fabReceita);
