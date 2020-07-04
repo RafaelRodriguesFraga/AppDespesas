@@ -2,6 +2,7 @@ package com.rafaelfraga.appdespesas.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -33,11 +34,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabDespesa:
-                Toast.makeText(this, "Clicou no botao despesa", Toast.LENGTH_SHORT).show();
+                Intent intentDespesa = new Intent(DashboardActivity.this, DespesasActivity.class);
+                startActivity(intentDespesa);
             break;
 
             case R.id.fabReceita:
-                Toast.makeText(this, "Clicou no botao receita", Toast.LENGTH_SHORT).show();
+                Intent imtentReceita = new Intent(DashboardActivity.this, ReceitasActivity.class);
+                startActivity(imtentReceita);
                 break;
         }
     }
