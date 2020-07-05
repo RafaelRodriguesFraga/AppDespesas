@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.rafaelfraga.appdespesas.R;
 import com.rafaelfraga.appdespesas.config.FirebaseConfig;
+import com.rafaelfraga.appdespesas.helpers.Base64Helper;
 import com.rafaelfraga.appdespesas.models.Usuario;
 
 public class CadastrarActivity extends AppCompatActivity {
@@ -69,6 +70,9 @@ public class CadastrarActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String id = Base64Helper.codificarBase64(mUsuario.getEmail());
+                            mUsuario.setId(id);
+                            mUsuario.cadastrar();
                            finish();
                         } else {
                             String excecao = "";
