@@ -22,7 +22,7 @@ public class Movimentacao {
         String mesAno = DataHelper.converterDataParaMesAno(data);
 
         DatabaseReference reference = FirebaseConfig.getFirebaseReference();
-        reference.child("movimentacao")
+        reference.child("movimentacoes")
                 .child(id)
                 .child(mesAno)
                 .push() //Cria um id no Firebase
