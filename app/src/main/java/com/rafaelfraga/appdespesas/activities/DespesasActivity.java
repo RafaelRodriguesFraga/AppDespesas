@@ -6,23 +6,36 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.rafaelfraga.appdespesas.R;
+import com.rafaelfraga.appdespesas.config.FirebaseConfig;
+import com.rafaelfraga.appdespesas.helpers.Base64Helper;
 import com.rafaelfraga.appdespesas.helpers.DataHelper;
 import com.rafaelfraga.appdespesas.models.Movimentacao;
+import com.rafaelfraga.appdespesas.models.Usuario;
 
 public class DespesasActivity extends AppCompatActivity {
-    EditText mValor;
-    TextInputEditText mData;
-    TextInputEditText mCategoria;
-    TextInputEditText mDescricao;
-    FloatingActionButton mSalvar;
-
+    private EditText mValor;
+    private TextInputEditText mData;
+    private TextInputEditText mCategoria;
+    private TextInputEditText mDescricao;
+    private FloatingActionButton mSalvar;
     private Movimentacao mMovimentacao;
+
+    private DatabaseReference mRef = FirebaseConfig.getFirebaseReference();
+    private FirebaseAuth mAuth = FirebaseConfig.getFirebaseAuth();
+
+    private Double mDespesaTotal;
 
 
     @Override
@@ -37,6 +50,8 @@ public class DespesasActivity extends AppCompatActivity {
         mSalvar = (FloatingActionButton) findViewById(R.id.fabSalvar);
 
         mData.setText(DataHelper.recuperarDataAtual());
+
+        recuperarDespesaTotal();
 
         mSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +73,45 @@ public class DespesasActivity extends AppCompatActivity {
             return;
         }
 
+        double valorConvertido = Double.parseDouble(valor);
+
         mMovimentacao = new Movimentacao();
-        mMovimentacao.setValor(Double.parseDouble(valor));
+        mMovimentacao.setValor(valorConvertido);
         mMovimentacao.setData(data);
         mMovimentacao.setCategoria(categoria);
         mMovimentacao.setDescricao(descricao);
         mMovimentacao.setTipo("D");
 
+        Double despesaAtualizada = mDespesaTotal + valorConvertido;
+        atualizarDespesa(despesaAtualizada);
+
         mMovimentacao.salvar(data);
+
+    }
+
+    public void recuperarDespesaTotal() {
+        String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
+        DatabaseReference reference = mRef.child("usuarios").child(id);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                mDespesaTotal = usuario.getDespesaTotal();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void atualizarDespesa(Double despesa) {
+        String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
+        DatabaseReference reference = mRef.child("usuarios").child(id);
+
+        reference.child("despesaTotal").setValue(despesa);
 
     }
 }
