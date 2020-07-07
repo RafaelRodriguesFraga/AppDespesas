@@ -3,7 +3,6 @@ package com.rafaelfraga.appdespesas.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +34,6 @@ public class DespesasActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseConfig.getFirebaseAuth();
 
     private Double mDespesaTotal;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +65,7 @@ public class DespesasActivity extends AppCompatActivity {
         String categoria = mCategoria.getText().toString();
         String descricao = mDescricao.getText().toString();
 
-        if(valor.isEmpty() || data.isEmpty() || categoria.isEmpty() || descricao.isEmpty()) {
+        if (valor.isEmpty() || data.isEmpty() || categoria.isEmpty() || descricao.isEmpty()) {
             Toast.makeText(this, "Todos os campos são obrigatórios", Toast.LENGTH_SHORT).show();
             return;
         }
