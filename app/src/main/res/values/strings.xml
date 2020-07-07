@@ -24,4 +24,5 @@
     <string name="data">dd/MM/aaaa</string>
     <string name="categoria">Categoria</string>
     <string name="descricao">Descrição</string>
+    <string name="saudacao">Saudação</string>
 </resources>
