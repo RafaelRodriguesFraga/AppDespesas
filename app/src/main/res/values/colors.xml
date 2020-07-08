@@ -9,6 +9,7 @@
     <color name="colorPrimaryDespesa">#FF706A</color>
     <color name="colorPrimaryDarkDespesa">#E66560</color>
     <color name="colorAccentDespesa">#FF706A</color>
+    <color name="colorDanger">#FF0000</color>
 
     <!--Color Receitas-->
     <color name="colorPrimaryReceita">#00D39E</color>
