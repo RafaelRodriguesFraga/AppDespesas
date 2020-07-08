@@ -11,6 +11,7 @@ public class Movimentacao {
     private String categoria;
     private String descricao;
     private String tipo;
+    private String chave;
     private Double valor;
 
     public Movimentacao() {
@@ -59,6 +60,14 @@ public class Movimentacao {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getChave() {
+        return chave;
+    }
+
+    public void setChave(String chave) {
+        this.chave = chave;
     }
 
     public Double getValor() {
