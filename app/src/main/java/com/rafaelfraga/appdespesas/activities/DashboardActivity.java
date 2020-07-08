@@ -82,6 +82,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     protected void onStart() {
         super.onStart();
         recuperarResumo();
+        recuperarMovimentacoes();
     }
 
     @Override
@@ -124,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-
+                mesAnoSelecionado = String.valueOf(date.getMonth() + "" + date.getYear());
             }
         });
     }
@@ -165,5 +166,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mRecyclerMovimentacao.setAdapter(mAdapter);
     }
 
+    public void recuperarMovimentacoes() {
+        String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
 
+        mMovimentacaoRef.child("movimentacoes")
+                .child(id)
+                .child(mesAnoSelecionado);
+    }
 }
