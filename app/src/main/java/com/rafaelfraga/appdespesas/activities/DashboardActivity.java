@@ -3,6 +3,8 @@ package com.rafaelfraga.appdespesas.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,11 +24,15 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.rafaelfraga.appdespesas.R;
+import com.rafaelfraga.appdespesas.adapters.MovimentacaoAdapter;
 import com.rafaelfraga.appdespesas.config.FirebaseConfig;
 import com.rafaelfraga.appdespesas.helpers.Base64Helper;
+import com.rafaelfraga.appdespesas.models.Movimentacao;
 import com.rafaelfraga.appdespesas.models.Usuario;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,6 +42,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private TextView mSaudacao;
     private TextView mSaldo;
     private ImageView mSair;
+    private RecyclerView mRecyclerMovimentacao;
+    private MovimentacaoAdapter mAdapter;
+    private List<Movimentacao> mMovimentacoes = new ArrayList<>();
 
     private FirebaseAuth mAuth = FirebaseConfig.getFirebaseAuth();
     private DatabaseReference mRef = FirebaseConfig.getFirebaseReference();
@@ -60,7 +69,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mSair = findViewById(R.id.ivSair);
 
         configurarCalendarView();
-
+        prepararRecyclerView();
 
         mDespesa.setOnClickListener(this);
         mReceita.setOnClickListener(this);
@@ -140,5 +149,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
+    }
+
+    public void prepararRecyclerView() {
+        mAdapter = new MovimentacaoAdapter(mMovimentacoes, this);
+
+        mRecyclerMovimentacao = findViewById(R.id.rvMovimentacao);
+        mRecyclerMovimentacao.setHasFixedSize(true);
+        mRecyclerMovimentacao.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerMovimentacao.setAdapter(mAdapter);
     }
 }
