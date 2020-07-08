@@ -84,6 +84,8 @@ public class DespesasActivity extends AppCompatActivity {
 
         mMovimentacao.salvar(data);
 
+        finish();
+
     }
 
     public void recuperarDespesaTotal() {

@@ -83,6 +83,7 @@ public class ReceitasActivity extends AppCompatActivity {
         atualizarReceita(receitaAtualizada);
 
         mMovimentacao.salvar(data);
+        finish();
 
     }
 
