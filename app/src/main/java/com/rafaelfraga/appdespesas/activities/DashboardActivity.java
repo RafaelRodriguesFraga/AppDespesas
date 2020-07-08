@@ -48,15 +48,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private FirebaseAuth mAuth = FirebaseConfig.getFirebaseAuth();
     private DatabaseReference mRef = FirebaseConfig.getFirebaseReference();
-    private DatabaseReference mMovimentacaoRef = FirebaseConfig.getFirebaseReference();
+    private DatabaseReference mMovimentacaoRef;
     private DatabaseReference mUsuarioRef;
-    private ValueEventListener mValueEventListener;
+    private ValueEventListener mValueEventListenerUsuario;
+    private ValueEventListener mValueEventListenerMovimentacao;
+
 
     private Double mDespesaTotal = 0.00;
     private Double mReceitaTotal = 0.00;
     private Double mCalculoSaldo = 0.00;
     private String mesAnoSelecionado;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        mUsuarioRef.removeEventListener(mValueEventListener);
+        mUsuarioRef.removeEventListener(mValueEventListenerUsuario);
+        mUsuarioRef.removeEventListener(mValueEventListenerMovimentacao);
     }
 
     @Override
@@ -120,12 +122,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mCalendarView.setTitleMonths(meses);
 
         CalendarDay dataAtual = mCalendarView.getCurrentDate();
-        mesAnoSelecionado = String.valueOf(dataAtual.getMonth() + "" + dataAtual.getYear());
+        String mesSelecionado = String.format("%02d", dataAtual.getMonth());
+        mesAnoSelecionado = String.valueOf(mesSelecionado + "" + dataAtual.getYear());
 
         mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
-                mesAnoSelecionado = String.valueOf(date.getMonth() + "" + date.getYear());
+                String mesSelecionado = String.format("%02d", date.getMonth());
+                mesAnoSelecionado = String.valueOf(mesSelecionado + "" + date.getYear());
             }
         });
     }
@@ -134,7 +138,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
         mUsuarioRef = mRef.child("usuarios").child(id);
 
-        mValueEventListener = mUsuarioRef.addValueEventListener(new ValueEventListener() {
+        mValueEventListenerUsuario = mUsuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
@@ -146,8 +150,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
                 String calculoSaldoFormatado = decimalFormat.format(mCalculoSaldo);
 
-                mSaudacao.setText("Olá, "+usuario.getNome());
-                mSaldo.setText("R$ "+calculoSaldoFormatado);
+                mSaudacao.setText("Olá, " + usuario.getNome());
+                mSaldo.setText("R$ " + calculoSaldoFormatado);
             }
 
             @Override
@@ -169,8 +173,27 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public void recuperarMovimentacoes() {
         String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
 
-        mMovimentacaoRef.child("movimentacoes")
-                .child(id)
-                .child(mesAnoSelecionado);
+        mMovimentacaoRef = mRef.child("movimentacoes")
+                                .child(id)
+                                .child(mesAnoSelecionado);
+
+        mValueEventListenerMovimentacao = mMovimentacaoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mMovimentacoes.clear();
+
+                for (DataSnapshot dados : dataSnapshot.getChildren()) {
+                    Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+                    mMovimentacoes.add(movimentacao);
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
