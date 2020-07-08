@@ -13,8 +13,6 @@
         android:layout_height="130dp"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -84,14 +82,26 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             app:mcv_selectionColor="#00F"
             app:mcv_showOtherDates="all"
             app:mcv_tileSize="50dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMovimentacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp" />
     </LinearLayout>
 
 
-
     <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/floatingActionMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -125,13 +135,6 @@
 
 
     </com.github.clans.fab.FloatingActionMenu>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="226dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
