@@ -2,11 +2,13 @@ package com.rafaelfraga.appdespesas.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +63,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private Double mReceitaTotal = 0.00;
     private Double mCalculoSaldo = 0.00;
     private String mesAnoSelecionado;
+    private Movimentacao movimentacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +211,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 mMovimentacoes.clear();
 
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
-                    Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+                    movimentacao = dados.getValue(Movimentacao.class);
+                    movimentacao.setChave(dados.getKey());
                     mMovimentacoes.add(movimentacao);
                 }
 
@@ -239,10 +243,46 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
+                excluirMovimentacao(viewHolder);
             }
         };
 
         new ItemTouchHelper(itemTouch).attachToRecyclerView(mRecyclerMovimentacao);
+    }
+
+    public void excluirMovimentacao(final RecyclerView.ViewHolder viewHolder) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        alertDialog.setTitle("Excluir Movimentação");
+        alertDialog.setMessage("Tem certeza que deseja excluir?");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int position = viewHolder.getAdapterPosition();
+                movimentacao = mMovimentacoes.get(position);
+
+                String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
+
+                mMovimentacaoRef = mRef.child("movimentacoes")
+                        .child(id)
+                        .child(mesAnoSelecionado);
+
+                mMovimentacaoRef.child(movimentacao.getChave()).removeValue();
+                mAdapter.notifyItemRemoved(position);
+            }
+        });
+
+        alertDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(DashboardActivity.this, "Cancelado", Toast.LENGTH_SHORT).show();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
     }
 }
