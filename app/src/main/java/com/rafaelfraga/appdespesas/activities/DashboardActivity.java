@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +39,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private FloatingActionButton mDespesa;
     private FloatingActionButton mReceita;
+    private FloatingActionMenu mMenu;
     private MaterialCalendarView mCalendarView;
     private TextView mSaudacao;
     private TextView mSaldo;
@@ -66,6 +68,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         mDespesa = findViewById(R.id.fabDespesa);
         mReceita = findViewById(R.id.fabReceita);
+        mMenu = findViewById(R.id.famMenu);
         mSaudacao = findViewById(R.id.tvSaudacao);
         mSaldo = findViewById(R.id.tvSaldo);
         mCalendarView = findViewById(R.id.calendarView);
@@ -130,6 +133,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 String mesSelecionado = String.format("%02d", date.getMonth());
                 mesAnoSelecionado = String.valueOf(mesSelecionado + "" + date.getYear());
+
+                mMovimentacaoRef.removeEventListener(mValueEventListenerMovimentacao);
+                recuperarMovimentacoes();
             }
         });
     }
@@ -168,6 +174,23 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mRecyclerMovimentacao.setHasFixedSize(true);
         mRecyclerMovimentacao.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMovimentacao.setAdapter(mAdapter);
+
+        mRecyclerMovimentacao.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy <= 0) {
+                    mMenu.showMenu(true);
+                }else{
+                    mMenu.hideMenu(true);
+
+                }
+            }
+        });
     }
 
     public void recuperarMovimentacoes() {
