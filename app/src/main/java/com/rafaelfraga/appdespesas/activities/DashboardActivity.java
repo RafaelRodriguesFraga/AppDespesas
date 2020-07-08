@@ -48,12 +48,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private FirebaseAuth mAuth = FirebaseConfig.getFirebaseAuth();
     private DatabaseReference mRef = FirebaseConfig.getFirebaseReference();
+    private DatabaseReference mMovimentacaoRef = FirebaseConfig.getFirebaseReference();
     private DatabaseReference mUsuarioRef;
     private ValueEventListener mValueEventListener;
 
     private Double mDespesaTotal = 0.00;
     private Double mReceitaTotal = 0.00;
     private Double mCalculoSaldo = 0.00;
+    private String mesAnoSelecionado;
 
 
     @Override
@@ -116,6 +118,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 "Agosto", "Setmbro", "Outubro", "Novembro", "Dezembro"};
         mCalendarView.setTitleMonths(meses);
 
+        CalendarDay dataAtual = mCalendarView.getCurrentDate();
+        mesAnoSelecionado = String.valueOf(dataAtual.getMonth() + "" + dataAtual.getYear());
+
         mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
@@ -159,4 +164,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mRecyclerMovimentacao.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerMovimentacao.setAdapter(mAdapter);
     }
+
+
 }
