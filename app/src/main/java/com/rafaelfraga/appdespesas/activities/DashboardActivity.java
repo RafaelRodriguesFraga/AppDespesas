@@ -271,6 +271,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
                 mMovimentacaoRef.child(movimentacao.getChave()).removeValue();
                 mAdapter.notifyItemRemoved(position);
+                atualizarSaldo();
             }
         });
 
@@ -284,5 +285,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         AlertDialog dialog = alertDialog.create();
         dialog.show();
+    }
+
+    public void atualizarSaldo() {
+        String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
+        mUsuarioRef = mRef.child("usuarios").child(id);
+
+        if(movimentacao.getTipo().equals("R")) {
+            mReceitaTotal = mReceitaTotal - movimentacao.getValor();
+            mUsuarioRef.child("receitaTotal").setValue(mReceitaTotal);
+        }
+
+        if(movimentacao.getTipo().equals("D")) {
+            mDespesaTotal = mDespesaTotal - movimentacao.getValor();
+            mUsuarioRef.child("despesaTotal").setValue(mDespesaTotal);
+        }
     }
 }
