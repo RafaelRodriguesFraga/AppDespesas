@@ -3,6 +3,7 @@ package com.rafaelfraga.appdespesas.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,6 +77,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         configurarCalendarView();
         prepararRecyclerView();
+        deslizar();
 
         mDespesa.setOnClickListener(this);
         mReceita.setOnClickListener(this);
@@ -183,9 +185,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(dy <= 0) {
+                if (dy <= 0) {
                     mMenu.showMenu(true);
-                }else{
+                } else {
                     mMenu.hideMenu(true);
 
                 }
@@ -197,8 +199,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
 
         mMovimentacaoRef = mRef.child("movimentacoes")
-                                .child(id)
-                                .child(mesAnoSelecionado);
+                .child(id)
+                .child(mesAnoSelecionado);
 
         mValueEventListenerMovimentacao = mMovimentacaoRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -218,5 +220,29 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
+    }
+
+    public void deslizar() {
+        ItemTouchHelper.Callback itemTouch = new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.ACTION_STATE_IDLE;
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                return makeMovementFlags(dragFlags, swipeFlags);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder
+                    viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        };
+
+        new ItemTouchHelper(itemTouch).attachToRecyclerView(mRecyclerMovimentacao);
     }
 }
