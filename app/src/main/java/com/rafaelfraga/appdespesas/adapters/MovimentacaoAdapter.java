@@ -41,6 +41,7 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<MovimentacaoAdapte
         holder.mTitulo.setText(movimentacao.getDescricao());
         holder.mValor.setText(String.valueOf(movimentacao.getValor()));
         holder.mCategoria.setText(movimentacao.getCategoria());
+        holder.mValor.setTextColor(mContext.getResources().getColor(R.color.colorAccentReceita));
 
         if(movimentacao.getTipo().equals("D")) {
             holder.mValor.setTextColor(mContext.getResources().getColor(R.color.colorDanger));
