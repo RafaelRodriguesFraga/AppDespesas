@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +39,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private FirebaseAuth mAuth = FirebaseConfig.getFirebaseAuth();
     private DatabaseReference mRef = FirebaseConfig.getFirebaseReference();
+    private DatabaseReference mUsuarioRef;
+    private ValueEventListener mValueEventListener;
 
     private Double mDespesaTotal = 0.00;
     private Double mReceitaTotal = 0.00;
@@ -57,11 +60,23 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mSair = findViewById(R.id.ivSair);
 
         configurarCalendarView();
-        recuperarResumo();
+
 
         mDespesa.setOnClickListener(this);
         mReceita.setOnClickListener(this);
         mSair.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recuperarResumo();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mUsuarioRef.removeEventListener(mValueEventListener);
     }
 
     @Override
@@ -102,9 +117,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     public void recuperarResumo() {
         String id = Base64Helper.codificarBase64(mAuth.getCurrentUser().getEmail());
-        DatabaseReference reference = mRef.child("usuarios").child(id);
+        mUsuarioRef = mRef.child("usuarios").child(id);
 
-        reference.addValueEventListener(new ValueEventListener() {
+        mValueEventListener = mUsuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
