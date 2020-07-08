@@ -15,7 +15,9 @@
         <activity android:name=".activities.DespesasActivity"
             android:theme="@style/DespesasTheme"/>
 
-        <activity android:name=".activities.DashboardActivity" />
+        <activity android:name=".activities.DashboardActivity"
+            android:theme="@style/DashboardTheme"/>
+
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.CadastrarActivity" />
         <activity
