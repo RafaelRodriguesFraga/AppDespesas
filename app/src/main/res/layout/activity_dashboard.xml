@@ -88,17 +88,19 @@
             app:mcv_selectionColor="#00F"
             app:mcv_showOtherDates="all"
             app:mcv_tileSize="50dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovimentacao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp" />
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMovimentacao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="0.738" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/famMenu"
@@ -106,10 +108,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="10dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.976"
         app:layout_constraintStart_toStartOf="parent"
         app:menu_colorNormal="@color/colorAccent"
         app:menu_colorPressed="@color/colorAccent"
