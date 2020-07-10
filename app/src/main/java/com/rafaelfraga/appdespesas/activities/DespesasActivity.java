@@ -1,12 +1,15 @@
 package com.rafaelfraga.appdespesas.activities;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -17,12 +20,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.rafaelfraga.appdespesas.R;
 import com.rafaelfraga.appdespesas.config.FirebaseConfig;
+import com.rafaelfraga.appdespesas.fragments.DatePickerFragment;
 import com.rafaelfraga.appdespesas.helpers.Base64Helper;
 import com.rafaelfraga.appdespesas.helpers.DataHelper;
 import com.rafaelfraga.appdespesas.models.Movimentacao;
 import com.rafaelfraga.appdespesas.models.Usuario;
 
-public class DespesasActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class DespesasActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+        View.OnClickListener {
+
     private EditText mValor;
     private TextInputEditText mData;
     private TextInputEditText mCategoria;
@@ -50,13 +60,34 @@ public class DespesasActivity extends AppCompatActivity {
 
         recuperarDespesaTotal();
 
-        mSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                salvarDespesa();
-            }
-        });
+        mSalvar.setOnClickListener(this);
+        mData.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tietData:
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+                break;
+
+            case R.id.fabSalvar:
+                salvarDespesa();
+                break;
+        }
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendario = Calendar.getInstance();
+        calendario.set(Calendar.YEAR, year);
+        calendario.set(Calendar.MONTH, month);
+        calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String dataAtual = DateFormat.getDateInstance(DateFormat.SHORT).format(calendario.getTime());
+
+        mData.setText(dataAtual);
     }
 
     public void salvarDespesa() {

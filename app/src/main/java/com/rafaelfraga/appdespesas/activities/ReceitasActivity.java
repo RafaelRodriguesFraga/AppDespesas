@@ -2,9 +2,12 @@ package com.rafaelfraga.appdespesas.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,12 +20,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.rafaelfraga.appdespesas.R;
 import com.rafaelfraga.appdespesas.config.FirebaseConfig;
+import com.rafaelfraga.appdespesas.fragments.DatePickerFragment;
 import com.rafaelfraga.appdespesas.helpers.Base64Helper;
 import com.rafaelfraga.appdespesas.helpers.DataHelper;
 import com.rafaelfraga.appdespesas.models.Movimentacao;
 import com.rafaelfraga.appdespesas.models.Usuario;
 
-public class ReceitasActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class ReceitasActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
     private EditText mValor;
     private TextInputEditText mData;
@@ -51,12 +58,34 @@ public class ReceitasActivity extends AppCompatActivity {
 
         recuperarReceitaTotal();
 
-        mSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mSalvar.setOnClickListener(this);
+        mData.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tietData:
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+                break;
+
+            case R.id.fabSalvar:
                 salvarReceita();
-            }
-        });
+                break;
+        }
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendario = Calendar.getInstance();
+        calendario.set(Calendar.YEAR, year);
+        calendario.set(Calendar.MONTH, month);
+        calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String dataAtual = DateFormat.getDateInstance(DateFormat.SHORT).format(calendario.getTime());
+
+        mData.setText(dataAtual);
     }
 
     public void salvarReceita() {
@@ -111,6 +140,4 @@ public class ReceitasActivity extends AppCompatActivity {
 
         reference.child("receitaTotal").setValue(receita);
     }
-
-
 }
