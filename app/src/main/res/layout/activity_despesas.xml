@@ -49,6 +49,7 @@
             android:id="@+id/tietData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="false"
             android:hint="@string/data"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -73,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/categoria"
+            android:inputType="textCapSentences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -94,6 +96,7 @@
             android:id="@+id/tietDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:hint="@string/descricao" />
     </com.google.android.material.textfield.TextInputLayout>
 
