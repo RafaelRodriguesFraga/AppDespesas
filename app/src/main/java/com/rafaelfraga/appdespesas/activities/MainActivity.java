@@ -28,9 +28,8 @@ public class MainActivity extends IntroActivity {
 
     private void adicionarSlides() {
 
-        setButtonBackVisible(false);
         setButtonNextVisible(false);
-        setButtonNextVisible(false);
+        setButtonBackVisible(true);
 
         addSlide(new FragmentSlide.Builder()
                 .background(android.R.color.white)
