@@ -6,113 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".activities.DespesasActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:background="@color/colorPrimaryDespesa"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/etDinheiro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="end"
-            android:hint="@string/monetario"
-            android:inputType="numberDecimal"
-            android:textColorHint="@android:color/white"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/textInputLayout8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.16000003"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tietDescricao"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/descricao"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tietData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="false"
-            android:hint="@string/data"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:hint="@string/data" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/textInputLayout9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/btnSalvarDespesa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietCategoria"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/categoria"
-            android:inputType="textCapSentences"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietDescricao"
+            android:id="@+id/tietValor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
-            android:hint="@string/descricao" />
+            android:hint="@string/valor"
+            android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSalvar"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnSalvarDespesa"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_add"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/cadastrar"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 </androidx.constraintlayout.widget.ConstraintLayout>
