@@ -10,10 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.ReceitasActivity"
-            android:theme="@style/ReceitasTheme"/>
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme"
+            android:label="Cadastrar Receita"
+            android:parentActivityName=".activities.DashboardActivity"/>
 
         <activity android:name=".activities.DespesasActivity"
-            android:theme="@style/DespesasTheme"/>
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme"
+            android:label="Cadastrar Despesa"
+            android:parentActivityName=".activities.DashboardActivity"/>
 
         <activity android:name=".activities.DashboardActivity"
             android:theme="@style/DashboardTheme"/>
