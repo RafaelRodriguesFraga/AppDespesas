@@ -39,8 +39,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<MovimentacaoAdapte
         Movimentacao movimentacao = mMovimentacoes.get(position);
 
         holder.mTitulo.setText(movimentacao.getDescricao());
+        holder.mData.setText(movimentacao.getData());
         holder.mValor.setText(String.valueOf(movimentacao.getValor()));
-        holder.mCategoria.setText(movimentacao.getCategoria());
         holder.mValor.setTextColor(mContext.getResources().getColor(R.color.colorAccentReceita));
 
         if(movimentacao.getTipo().equals("D")) {
@@ -56,14 +56,14 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<MovimentacaoAdapte
 
     public class MovimentacaoViewHolder extends RecyclerView.ViewHolder {
         private TextView mTitulo;
-        private TextView mCategoria;
+        private TextView mData;
         private TextView mValor;
 
         public MovimentacaoViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mTitulo = itemView.findViewById(R.id.tvTitulo);
-            mCategoria = itemView.findViewById(R.id.tvCategoria);
+            mData = itemView.findViewById(R.id.tvData);
             mValor = itemView.findViewById(R.id.tvValor);
         }
     }

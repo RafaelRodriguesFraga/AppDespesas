@@ -8,7 +8,6 @@ import com.rafaelfraga.appdespesas.helpers.DataHelper;
 
 public class Movimentacao {
     private String data;
-    private String categoria;
     private String descricao;
     private String tipo;
     private String chave;
@@ -36,14 +35,6 @@ public class Movimentacao {
 
     public void setData(String data) {
         this.data = data;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public String getDescricao() {
