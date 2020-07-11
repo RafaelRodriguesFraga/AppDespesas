@@ -3,15 +3,14 @@ package com.rafaelfraga.appdespesas.activities;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,16 +27,14 @@ import com.rafaelfraga.appdespesas.models.Usuario;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class DespesasActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
         View.OnClickListener {
 
-    private EditText mValor;
+    private TextInputEditText mValor;
     private TextInputEditText mData;
-    private TextInputEditText mCategoria;
     private TextInputEditText mDescricao;
-    private FloatingActionButton mSalvar;
+    private Button mSalvar;
     private Movimentacao mMovimentacao;
 
     private DatabaseReference mRef = FirebaseConfig.getFirebaseReference();
@@ -50,11 +47,10 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despesas);
 
-        mValor = (EditText) findViewById(R.id.etDinheiro);
-        mData = (TextInputEditText) findViewById(R.id.tietData);
-        mCategoria = (TextInputEditText) findViewById(R.id.tietCategoria);
-        mDescricao = (TextInputEditText) findViewById(R.id.tietDescricao);
-        mSalvar = (FloatingActionButton) findViewById(R.id.fabSalvar);
+        mValor = findViewById(R.id.tietValor);
+        mData = findViewById(R.id.tietData);
+        mDescricao = findViewById(R.id.tietDescricao);
+        mSalvar = findViewById(R.id.btnSalvarDespesa);
 
         mData.setText(DataHelper.recuperarDataAtual());
 
@@ -62,6 +58,8 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
 
         mSalvar.setOnClickListener(this);
         mData.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -72,7 +70,7 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
                 datePicker.show(getSupportFragmentManager(), "date picker");
                 break;
 
-            case R.id.fabSalvar:
+            case R.id.btnSalvarDespesa:
                 salvarDespesa();
                 break;
         }
@@ -93,10 +91,9 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
     public void salvarDespesa() {
         String valor = mValor.getText().toString();
         String data = mData.getText().toString();
-        String categoria = mCategoria.getText().toString();
         String descricao = mDescricao.getText().toString();
 
-        if (valor.isEmpty() || data.isEmpty() || categoria.isEmpty() || descricao.isEmpty()) {
+        if (valor.isEmpty() || data.isEmpty() || descricao.isEmpty()) {
             Toast.makeText(this, "Todos os campos são obrigatórios", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -106,7 +103,6 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
         mMovimentacao = new Movimentacao();
         mMovimentacao.setValor(valorConvertido);
         mMovimentacao.setData(data);
-        mMovimentacao.setCategoria(categoria);
         mMovimentacao.setDescricao(descricao);
         mMovimentacao.setTipo("D");
 
@@ -114,6 +110,8 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
         atualizarDespesa(despesaAtualizada);
 
         mMovimentacao.salvar(data);
+
+        Toast.makeText(this, "Despesa salva com sucesso", Toast.LENGTH_SHORT).show();
 
         finish();
 
