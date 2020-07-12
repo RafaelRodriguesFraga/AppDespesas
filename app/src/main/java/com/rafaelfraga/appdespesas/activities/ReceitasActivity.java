@@ -2,6 +2,9 @@ package com.rafaelfraga.appdespesas.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,9 +29,13 @@ import com.rafaelfraga.appdespesas.helpers.Base64Helper;
 import com.rafaelfraga.appdespesas.helpers.DataHelper;
 import com.rafaelfraga.appdespesas.models.Movimentacao;
 import com.rafaelfraga.appdespesas.models.Usuario;
+import com.rafaelfraga.appdespesas.textwatcher.DataTextWatcher;
+import com.rafaelfraga.appdespesas.textwatcher.DinheiroTextWatcher;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class ReceitasActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
@@ -55,7 +62,14 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
 
         mData.setText(DataHelper.recuperarDataAtual());
 
+        //Mascara Monetaria
+        mValor.addTextChangedListener( new DinheiroTextWatcher(mValor));
+
+        //Mascara de Data
+        mData.addTextChangedListener(new DataTextWatcher(mData));
+
         recuperarReceitaTotal();
+
 
         mSalvar.setOnClickListener(this);
         mData.setOnClickListener(this);
@@ -88,7 +102,7 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
     }
 
     public void salvarReceita() {
-        String valor = mValor.getText().toString();
+        String valor =  mValor.getText().toString();
         String data = mData.getText().toString();
         String descricao = mDescricao.getText().toString();
 
@@ -97,7 +111,11 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
             return;
         }
 
-        double valorConvertido = Double.parseDouble(valor);
+        String valorSemPonto = valor.replace(".", "");
+        String virgulaPorPonto = valorSemPonto.replace(",", ".");
+
+        double valorConvertido = Double.parseDouble(virgulaPorPonto);
+
 
         mMovimentacao = new Movimentacao();
         mMovimentacao.setValor(valorConvertido);
@@ -105,7 +123,7 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
         mMovimentacao.setDescricao(descricao);
         mMovimentacao.setTipo("R");
 
-        Double receitaAtualizada = mReceitaTotal + valorConvertido;
+        double receitaAtualizada = mReceitaTotal + valorConvertido;
         atualizarReceita(receitaAtualizada);
 
         mMovimentacao.salvar(data);

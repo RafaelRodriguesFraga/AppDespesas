@@ -24,6 +24,8 @@ import com.rafaelfraga.appdespesas.helpers.Base64Helper;
 import com.rafaelfraga.appdespesas.helpers.DataHelper;
 import com.rafaelfraga.appdespesas.models.Movimentacao;
 import com.rafaelfraga.appdespesas.models.Usuario;
+import com.rafaelfraga.appdespesas.textwatcher.DataTextWatcher;
+import com.rafaelfraga.appdespesas.textwatcher.DinheiroTextWatcher;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -53,6 +55,12 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
         mSalvar = findViewById(R.id.btnSalvarDespesa);
 
         mData.setText(DataHelper.recuperarDataAtual());
+
+        //Mascara Monetaria
+        mValor.addTextChangedListener( new DinheiroTextWatcher(mValor));
+
+        //Mascara de Data
+        mData.addTextChangedListener(new DataTextWatcher(mData));
 
         recuperarDespesaTotal();
 
@@ -98,7 +106,11 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
             return;
         }
 
-        double valorConvertido = Double.parseDouble(valor);
+
+        String valorSemPonto = valor.replace(".", "");
+        String virgulaPorPonto = valorSemPonto.replace(",", ".");
+
+        double valorConvertido = Double.parseDouble(virgulaPorPonto);
 
         mMovimentacao = new Movimentacao();
         mMovimentacao.setValor(valorConvertido);
