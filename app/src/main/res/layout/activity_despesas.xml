@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/descricao"
+            android:inputType="textCapSentences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="false"
+            android:inputType="date"
             android:hint="@string/data" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/valor"
-            android:inputType="textCapSentences" />
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
