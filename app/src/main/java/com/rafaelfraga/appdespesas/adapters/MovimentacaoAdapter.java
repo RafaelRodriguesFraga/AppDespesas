@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rafaelfraga.appdespesas.R;
 import com.rafaelfraga.appdespesas.models.Movimentacao;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class MovimentacaoAdapter extends RecyclerView.Adapter<MovimentacaoAdapter.MovimentacaoViewHolder> {
@@ -38,14 +39,18 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<MovimentacaoAdapte
     public void onBindViewHolder(@NonNull MovimentacaoViewHolder holder, int position) {
         Movimentacao movimentacao = mMovimentacoes.get(position);
 
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        String valorFormatado = decimalFormat.format(movimentacao.getValor());
+
         holder.mTitulo.setText(movimentacao.getDescricao());
         holder.mData.setText(movimentacao.getData());
-        holder.mValor.setText(String.valueOf(movimentacao.getValor()));
+
+        holder.mValor.setText(String.valueOf(valorFormatado));
         holder.mValor.setTextColor(mContext.getResources().getColor(R.color.colorAccentReceita));
 
         if(movimentacao.getTipo().equals("D")) {
             holder.mValor.setTextColor(mContext.getResources().getColor(R.color.colorDanger));
-            holder.mValor.setText("-"+movimentacao.getValor());
+            holder.mValor.setText("-"+valorFormatado);
         }
     }
 
@@ -65,6 +70,8 @@ public class MovimentacaoAdapter extends RecyclerView.Adapter<MovimentacaoAdapte
             mTitulo = itemView.findViewById(R.id.tvTitulo);
             mData = itemView.findViewById(R.id.tvData);
             mValor = itemView.findViewById(R.id.tvValor);
+
+
         }
     }
 }
