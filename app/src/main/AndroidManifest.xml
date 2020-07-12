@@ -24,8 +24,14 @@
         <activity android:name=".activities.DashboardActivity"
             android:theme="@style/DashboardTheme"/>
 
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.CadastrarActivity" />
+        <activity android:name=".activities.LoginActivity"
+            android:label="Login"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".activities.CadastrarActivity"
+            android:label="Cadastrar"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/Theme.Intro">
