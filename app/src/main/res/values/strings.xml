@@ -27,4 +27,6 @@
     <string name="valor">Valor</string>
     <string name="categoria">Categoria</string>
     <string name="titulo">Titulo</string>
+    <string name="data_de_lancamento">Data de Lançamento</string>
+    <string name="valor_rs">Valor (R$)</string>
 </resources>
