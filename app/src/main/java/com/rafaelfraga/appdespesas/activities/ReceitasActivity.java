@@ -39,9 +39,10 @@ import java.util.Locale;
 
 public class ReceitasActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
-    private TextInputEditText mValor;
-    private TextInputEditText mDescricao;
-    private TextInputEditText mData;
+    private EditText mValor;
+    private EditText mValor2;
+    private EditText mDescricao;
+    private EditText mData;
     private Button mSalvar;
     private Movimentacao mMovimentacao;
 
@@ -55,18 +56,16 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receitas);
 
-        mValor = findViewById(R.id.tietValor);
-        mDescricao = findViewById(R.id.tietDescricao);
-        mData = findViewById(R.id.tietData);
+        mValor = findViewById(R.id.etValor);
+
+        mDescricao = findViewById(R.id.etDescricao);
+        mData = findViewById(R.id.etData );
         mSalvar = findViewById(R.id.btnCadastrarReceita);
 
         mData.setText(DataHelper.recuperarDataAtual());
 
         //Mascara Monetaria
         mValor.addTextChangedListener( new DinheiroTextWatcher(mValor));
-
-        //Mascara de Data
-        mData.addTextChangedListener(new DataTextWatcher(mData));
 
         recuperarReceitaTotal();
 
@@ -78,7 +77,7 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tietData:
+            case R.id.etData:
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
                 break;
@@ -115,7 +114,6 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
         String virgulaPorPonto = valorSemPonto.replace(",", ".");
 
         double valorConvertido = Double.parseDouble(virgulaPorPonto);
-
 
         mMovimentacao = new Movimentacao();
         mMovimentacao.setValor(valorConvertido);
