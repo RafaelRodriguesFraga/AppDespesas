@@ -269,6 +269,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 mMovimentacaoRef.child(movimentacao.getChave()).removeValue();
                 mAdapter.notifyItemRemoved(position);
                 atualizarSaldo();
+                Toast.makeText(DashboardActivity.this, "Excluído com sucesso", Toast.LENGTH_SHORT).show();
             }
         });
 

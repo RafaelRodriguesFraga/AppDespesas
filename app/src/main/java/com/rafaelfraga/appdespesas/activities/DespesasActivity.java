@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,9 +34,9 @@ import java.util.Calendar;
 public class DespesasActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
         View.OnClickListener {
 
-    private TextInputEditText mValor;
-    private TextInputEditText mData;
-    private TextInputEditText mDescricao;
+    private EditText mValor;
+    private EditText mData;
+    private EditText mDescricao;
     private Button mSalvar;
     private Movimentacao mMovimentacao;
 
@@ -49,36 +50,31 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_despesas);
 
-        mValor = findViewById(R.id.tietValor);
-        mData = findViewById(R.id.tietData);
-        mDescricao = findViewById(R.id.tietDescricao);
-        mSalvar = findViewById(R.id.btnSalvarDespesa);
+        mValor = findViewById(R.id.etValor);
+        mData = findViewById(R.id.etData);
+        mDescricao = findViewById(R.id.etDescricao);
+        mSalvar = findViewById(R.id.btnCadastrarDespesa);
 
         mData.setText(DataHelper.recuperarDataAtual());
 
         //Mascara Monetaria
         mValor.addTextChangedListener( new DinheiroTextWatcher(mValor));
 
-        //Mascara de Data
-        mData.addTextChangedListener(new DataTextWatcher(mData));
-
         recuperarDespesaTotal();
 
         mSalvar.setOnClickListener(this);
         mData.setOnClickListener(this);
-
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tietData:
+            case R.id.etData:
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
                 break;
 
-            case R.id.btnSalvarDespesa:
+            case R.id.btnCadastrarDespesa:
                 salvarDespesa();
                 break;
         }
@@ -105,7 +101,6 @@ public class DespesasActivity extends AppCompatActivity implements DatePickerDia
             Toast.makeText(this, "Todos os campos são obrigatórios", Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         String valorSemPonto = valor.replace(".", "");
         String virgulaPorPonto = valorSemPonto.replace(",", ".");

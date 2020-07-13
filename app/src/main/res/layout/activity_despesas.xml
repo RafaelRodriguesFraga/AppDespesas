@@ -6,72 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".activities.DespesasActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout8"
+    <EditText
+        android:id="@+id/etDescricao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout7"
+        android:hint="@string/descricao"
+        android:inputType="textCapSentences"
+        app:layout_constraintBottom_toTopOf="@+id/etData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietDescricao"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/descricao"
-            android:inputType="textCapSentences"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout7"
+    <EditText
+        android:id="@+id/etData"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="@string/data_de_lancamento"
+        android:inputType="date"
+        android:maxLength="10"
+        app:layout_constraintBottom_toTopOf="@+id/etValor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
+        app:layout_constraintTop_toBottomOf="@+id/etDescricao" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietData"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="false"
-            android:inputType="date"
-            android:hint="@string/data" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout9"
+    <EditText
+        android:id="@+id/etValor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSalvarDespesa"
+        android:hint="@string/valor_rs"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/btnCadastrarDespesa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietValor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/valor"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/etData" />
 
     <Button
-        android:id="@+id/btnSalvarDespesa"
+        android:id="@+id/btnCadastrarDespesa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -84,5 +66,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
+        app:layout_constraintTop_toBottomOf="@+id/etValor" />
 </androidx.constraintlayout.widget.ConstraintLayout>
