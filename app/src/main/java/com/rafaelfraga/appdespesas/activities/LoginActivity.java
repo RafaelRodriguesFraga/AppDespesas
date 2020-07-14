@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.rafaelfraga.appdespesas.R;
 import com.rafaelfraga.appdespesas.config.FirebaseConfig;
+import com.rafaelfraga.appdespesas.dialog.CarregandoDialog;
 import com.rafaelfraga.appdespesas.models.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mEntrar;
     private Usuario usuario;
     private FirebaseAuth mAuth;
-
+    CarregandoDialog dialog = new CarregandoDialog(LoginActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +50,13 @@ public class LoginActivity extends AppCompatActivity {
                             "campos são obrigatórios", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                dialog.carregarDialog();
 
                 usuario = new Usuario();
                 usuario.setEmail(email);
                 usuario.setSenha(senha);
 
                 entrar();
-
-
             }
         });
     }
@@ -70,8 +70,10 @@ public class LoginActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                            startActivity(intent);
+                            dialog.fecharDialog();
                            finish();
                         }else {
+                            dialog.fecharDialog();
                             String excecao = "";
                             try {
                                 throw task.getException();
