@@ -34,6 +34,7 @@ import com.rafaelfraga.appdespesas.textwatcher.DinheiroTextWatcher;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -59,13 +60,13 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
         mValor = findViewById(R.id.etValor);
 
         mDescricao = findViewById(R.id.etDescricao);
-        mData = findViewById(R.id.etData );
+        mData = findViewById(R.id.etData);
         mSalvar = findViewById(R.id.btnCadastrarReceita);
 
         mData.setText(DataHelper.recuperarDataAtual());
 
         //Mascara Monetaria
-        mValor.addTextChangedListener( new DinheiroTextWatcher(mValor));
+        mValor.addTextChangedListener(new DinheiroTextWatcher(mValor));
 
         recuperarReceitaTotal();
 
@@ -95,13 +96,20 @@ public class ReceitasActivity extends AppCompatActivity implements DatePickerDia
         calendario.set(Calendar.MONTH, month);
         calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        String dataAtual = DateFormat.getDateInstance(DateFormat.SHORT).format(calendario.getTime());
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("pt", "BR"));
+        if (df instanceof SimpleDateFormat) {
+            SimpleDateFormat sdf = (SimpleDateFormat) df;
+            String pattern = sdf.toPattern().replaceAll("y+", "yyyy");
+            sdf.applyPattern(pattern);
+            String dataAtual = sdf.format(calendario.getTime());
+            mData.setText(dataAtual);
+        }
 
-        mData.setText(dataAtual);
+
     }
 
     public void salvarReceita() {
-        String valor =  mValor.getText().toString();
+        String valor = mValor.getText().toString();
         String data = mData.getText().toString();
         String descricao = mDescricao.getText().toString();
 
